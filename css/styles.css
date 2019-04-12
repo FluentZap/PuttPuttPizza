@@ -1,0 +1,63 @@
+h1 {
+  text-align: center;
+}
+
+body {
+  text-align: center;
+}
+
+.pizza {
+  background-color: grey;;
+  width: 80%;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+
+.orders {
+  background-color: grey;
+  width: 20%;
+}
+
+.options {
+  background-color: silver;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 600px;
+  padding: 0px;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  width: 20%;
+}
+
+h3 {
+  line-height: 4vw;
+  margin: 0px;
+  font-size: 2vw;
+}
+
+.option {
+  margin-top: 1vw;
+  width: 100%;
+  border: 1px solid rgba(100, 100, 100, 0.5);
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

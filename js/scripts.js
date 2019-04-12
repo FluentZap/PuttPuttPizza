@@ -3,6 +3,7 @@ var prices;
 function Order(storeNumber) {
   this.storeNumber = storeNumber;
   this.orderItems = [];
+  this.currentItem = 0;
   this.clientInformation = ""
 }
 
@@ -15,7 +16,7 @@ function OrderItem(name, ) {
   this.toppings = [];
 }
 
-OrderItem.prototype.updatePizzia = function (name) {
+OrderItem.prototype.addToPizza = function (name) {
   if (name.includes("crust")) {
     this.crustStyle = name; return;
   }
@@ -71,17 +72,13 @@ PriceDatabase.prototype.getCost = function (name) {
   return false;
 };
 
-
 function PriceDatabaseEntry(name, cost) {
   this.cost = cost;
   this.name = name;
 }
 
 
-
-$(document).ready(function () {
-  prices = new PriceDatabase();
-  //Size Prices are a multiplier for the pizzia price
+function addBasicPrices() {
   prices.addEntry("size-small", 0.80);
   prices.addEntry("size-medium", 1.00);
   prices.addEntry("size-large", 1.30);
@@ -109,5 +106,21 @@ $(document).ready(function () {
   prices.addEntry("topping-meatballs", 0.75);
   prices.addEntry("topping-sausage", 0.50);
   prices.addEntry("topping-pepperoni", 0.50);
+}
+
+function addEventHandlers() {
+  $(".options").on("click", "", function (event) {
+    console.log(event.target.id);
+
+  });
+}
+
+$(document).ready(function () {
+  prices = new PriceDatabase();
+  addBasicPrices();
+  addEventHandlers();
+
+  //Size Prices are a multiplier for the pizzia price
+
 
 });
