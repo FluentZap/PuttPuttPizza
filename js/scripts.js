@@ -1,7 +1,9 @@
+var prices;
+
 function Order(storeNumber) {
   this.storeNumber = storeNumber;
-  this.orderItems = []
-  this.clientInformation =
+  this.orderItems = [];
+  this.clientInformation = ""
 }
 
 function OrderItem(name, ) {
@@ -12,6 +14,37 @@ function OrderItem(name, ) {
   this.sauce = ""
   this.toppings = [];
 }
+
+OrderItem.prototype.updatePizzia = function (name) {
+  if (name.includes("crust")) {
+    this.crustStyle = name; return;
+  }
+  if (name.includes("sauce")) {
+    this.sauce = name; return;
+  }
+  if (name.includes("size")) {
+    this.size = name; return;
+  }
+  this.topping.push(name);
+};
+
+
+OrderItem.prototype.getCost = function () {
+  if (!this.size || !this.crustStyle || !this.sauce) {
+    return false;
+  }
+  var cost = 0;
+  //add topping cost
+  this.toppings.forEach(function (topping) {
+    cost += prices.getCost(topping);
+  });
+  cost += prices.getCost(this.crustStyle);
+  cost += prices.getCost(this.sauce);
+  //multiply by size
+  cost *= prices.getCost(this.size);
+  return cost;
+}
+
 
 function ClientInformation() {
   this.name
@@ -28,7 +61,7 @@ function PriceDatabase() {
 }
 
 PriceDatabase.prototype.addEntry = function (name, cost) {
-  entries.push[new PriceDatabaseEntry(name, cost)];
+  this.entries.push(new PriceDatabaseEntry(name, cost));
 };
 
 PriceDatabase.prototype.getCost = function (name) {
@@ -45,24 +78,36 @@ function PriceDatabaseEntry(name, cost) {
 }
 
 
-var prices = new PriceDatabase();
-prices.addEntry("crust-thin", 7.00);
-prices.addEntry("crust-normal", 8.00);
-prices.addEntry("crust-deepdish", 9.50);
-
-prices.addEntry("cheese-mozzarella", 0.50);
-prices.addEntry("cheese-cheddar", 0.70);
-prices.addEntry("cheese-gouda", 1.00);
-
-prices.addEntry("topping-onions", 0.35);
-prices.addEntry("topping-tomatoes", 0.35);
-prices.addEntry("topping-bacon", 0.50);
-prices.addEntry("topping-meatballs", 0.75);
-prices.addEntry("topping-sausage", 0.50);
-prices.addEntry("topping-pepperoni", 0.50);
-
-
 
 $(document).ready(function () {
+  prices = new PriceDatabase();
+  //Size Prices are a multiplier for the pizzia price
+  prices.addEntry("size-small", 0.80);
+  prices.addEntry("size-medium", 1.00);
+  prices.addEntry("size-large", 1.30);
+  prices.addEntry("size-extraLarge", 2.00);
+
+  prices.addEntry("crust-thin", 7.00);
+  prices.addEntry("crust-normal", 8.00);
+  prices.addEntry("crust-deepdish", 9.50);
+
+  prices.addEntry("sauce-white", 0.70);
+  prices.addEntry("sauce-pesto", 0.70);
+  prices.addEntry("sauce-red", 0.50);
+  prices.addEntry("sauce-bbq", 0.50);
+
+  prices.addEntry("cheese-mozzarella", 0.50);
+  prices.addEntry("cheese-cheddar", 0.70);
+  prices.addEntry("cheese-gouda", 1.00);
+
+  prices.addEntry("topping-whiteOnions", 0.30);
+  prices.addEntry("topping-redOnions", 0.30);
+  prices.addEntry("topping-tomatoes", 0.50);
+  prices.addEntry("topping-olives", 0.60);
+
+  prices.addEntry("topping-bacon", 0.50);
+  prices.addEntry("topping-meatballs", 0.75);
+  prices.addEntry("topping-sausage", 0.50);
+  prices.addEntry("topping-pepperoni", 0.50);
 
 });
