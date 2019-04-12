@@ -100,11 +100,13 @@ function updateOrderUi(item) {
   var orders = ""
   for (var i = 0; i < item.orderItems.length; i++) {
     if (item.orderItems[i]) {
-      orders += "<h3 class='order rounded' id='" + i + "'>" + item.orderItems[i].name + " $" + item.orderItems[i].cost + "</h3>"
+      orders += "<h3 class='order rounded' id='" + i + "'>"
+      + '<button class="remove-pizza" type="button" name="button">X</button>'
+       + item.orderItems[i].name + " $" + item.orderItems[i].cost + "</h3>"
     }
   }
-
   $("#order-list").html(orders);
+  $("#" + item.currentItem).addClass("selected")
 }
 
 function updateToppingsUi(item) {
@@ -164,25 +166,30 @@ function addEventHandlers(order) {
     updateOrderUi(order);
   });
 
-  $("#order-list").on("click", ".order", function (event) {
-    var currentOrder = order.getCurrent()
-    $(".order").removeClass("selected")
-    $("#" + event.target.id).addClass("selected")
+  $("#order-list").on("click", "h3", function (event) {
     order.currentItem = event.target.id;
-    updateToppingsUi(currentOrder);
+    updateToppingsUi(order.getCurrent());
+    updateOrderUi(order);
+  });
+
+  $("#add-pizza").on("click", "", function (event) {
+    order.addItem();
+    order.currentItem = order.orderItems.length - 1;
+    order.getCurrent().getCost();
+    updateToppingsUi(order.getCurrent());
     updateOrderUi(order);
   });
 }
 
 $(document).ready(function () {
   prices = new PriceDatabase();
+  addBasicPrices();
+
   order = new Order();
   order.addItem();
-  order.addItem();
-  order.addItem();
-  updateToppingsUi(order.orderItems[order.currentItem]);
+  order.getCurrent().getCost();
+  updateToppingsUi(order.getCurrent());
   updateOrderUi(order)
-  addBasicPrices();
   addEventHandlers(order);
   //Size Prices are a multiplier for the pizzia price
 

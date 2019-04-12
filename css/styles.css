@@ -18,6 +18,29 @@ body {
   margin-left: 1%;
 }
 
+.pizzaDisplay {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  background-color: blue;
+  overflow: hidden;
+  position: relative;
+  width: 450px;
+}
+
+.btn-info {
+  margin-bottom: 1vw;
+}
+/* .pizzaDisplay { */
+
+.overlap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+
 .orders {
   background-color: grey;
   width: 20%;
