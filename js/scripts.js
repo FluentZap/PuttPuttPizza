@@ -9,7 +9,7 @@ function Order(storeNumber) {
 }
 
 Order.prototype.addItem = function () {
-  var name = "Item " + (this.orderItems.length + 1)
+  var name = "Pizza " + (this.orderItems.length + 1)
   this.orderItems.push(new OrderItem(name));
 };
 
@@ -19,7 +19,7 @@ Order.prototype.getCurrent = function () {
 
 function OrderItem(name) {
   this.cost = 0;
-  this.itemName = name;
+  this.name = name;
   this.options = ["size-medium", "crust-normal", "sauce-red"];
 }
 
@@ -42,16 +42,19 @@ OrderItem.prototype.addToPizza = function (name) {
 
 OrderItem.prototype.getCost = function () {
   var cost = 0;
+  var size = 0;
   //add topping cost
-  this.options.forEach(function (topping) {
-    cost += prices.getCost(topping);
+  this.options.forEach(function (option) {
+    if (option.includes("size")) {
+      size = prices.getCost(option)
+    } else {
+      cost += prices.getCost(option);
+    }
   });
-  cost += prices.getCost(this.crustStyle);
-  cost += prices.getCost(this.sauce);
   //multiply by size
-  cost *= prices.getCost(this.size);
-  this.cost = cost;  
-  return cost;
+  cost *= size;
+  this.cost = cost.toFixed(2);
+  return this.cost;
 }
 
 function removeIfContained(collection, entry) {
@@ -81,7 +84,6 @@ PriceDatabase.prototype.addEntry = function (name, cost) {
 };
 
 PriceDatabase.prototype.getCost = function (name) {
-  console.log(name);
   for (var i = 0; i < this.entries.length; i++) {
     if (this.entries[i].name === name) return this.entries[i].cost;
   }
@@ -97,7 +99,9 @@ function PriceDatabaseEntry(name, cost) {
 function updateOrderUi(item) {
   var orders = ""
   for (var i = 0; i < item.orderItems.length; i++) {
-    orders += "<h3>" + item.orderItems[i].name + item.orderItems[i].cost + "</h3>"
+    if (item.orderItems[i]) {
+      orders += "<h3 class='order rounded' id='" + i + "'>" + item.orderItems[i].name + " $" + item.orderItems[i].cost + "</h3>"
+    }
   }
 
   $("#order-list").html(orders);
@@ -128,7 +132,7 @@ function addBasicPrices() {
 
   prices.addEntry("crust-thin", 7.00);
   prices.addEntry("crust-normal", 8.00);
-  prices.addEntry("crust-deepdish", 9.50);
+  prices.addEntry("crust-deepDish", 9.50);
 
   prices.addEntry("sauce-white", 0.70);
   prices.addEntry("sauce-pesto", 0.70);
@@ -143,6 +147,7 @@ function addBasicPrices() {
   prices.addEntry("topping-redOnions", 0.30);
   prices.addEntry("topping-tomatoes", 0.50);
   prices.addEntry("topping-olives", 0.60);
+  prices.addEntry("topping-garlic", 0.60);
 
   prices.addEntry("topping-bacon", 0.50);
   prices.addEntry("topping-meatballs", 0.75);
@@ -158,11 +163,22 @@ function addEventHandlers(order) {
     currentOrder.getCost();
     updateOrderUi(order);
   });
+
+  $("#order-list").on("click", ".order", function (event) {
+    var currentOrder = order.getCurrent()
+    $(".order").removeClass("selected")
+    $("#" + event.target.id).addClass("selected")
+    order.currentItem = event.target.id;
+    updateToppingsUi(currentOrder);
+    updateOrderUi(order);
+  });
 }
 
 $(document).ready(function () {
   prices = new PriceDatabase();
   order = new Order();
+  order.addItem();
+  order.addItem();
   order.addItem();
   updateToppingsUi(order.orderItems[order.currentItem]);
   updateOrderUi(order)

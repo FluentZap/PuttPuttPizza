@@ -23,6 +23,13 @@ body {
   width: 20%;
 }
 
+.order {
+  background-color: lightgrey;
+  border: 1px solid rgba(100, 100, 100, 0.5);
+  font-size: 1.5vw;
+  line-height: 2.5vw;
+}
+
 .options {
   background-color: silver;
   overflow-y: scroll;
