@@ -8,7 +8,12 @@ function Order(storeNumber) {
   this.clientInformation = ""
 }
 
-function OrderItem(name, ) {
+Order.prototype.addItem = function () {
+  var name = "Item " + (this.orderItems.length + 1)
+  this.orderItems.push(new OrderItem(name));
+};
+
+function OrderItem(name) {
   this.cost = 0;
   this.itemName = name;
   this.size = ""
@@ -27,7 +32,11 @@ OrderItem.prototype.addToPizza = function (name) {
   if (name.includes("size")) {
     this.size = name; return;
   }
-  this.topping.push(name);
+  console.log(name);
+  for (var i = 0; i < this.toppings.length; i++) {
+    if (this.toppings[i] === name) return;
+  }
+  this.toppings.push(name);
 };
 
 
@@ -125,17 +134,18 @@ function addBasicPrices() {
   prices.addEntry("topping-pepperoni", 0.50);
 }
 
-function addEventHandlers() {
+function addEventHandlers(order) {
   $(".options").on("click", ".option", function (event) {
-    console.log(event.target.id);
+    order.orderItems[order.currentItem].addToPizza(event.target.id);
   });
 }
 
 $(document).ready(function () {
-  order = new Order();
   prices = new PriceDatabase();
+  order = new Order();
+  order.addItem();
   addBasicPrices();
-  addEventHandlers();
+  addEventHandlers(order);
   //Size Prices are a multiplier for the pizzia price
 
 
