@@ -1,5 +1,10 @@
 h1 {
   text-align: center;
+  font-size: 3vw;
+}
+
+h2 {
+  font-size: 2vw;
 }
 
 body {
@@ -39,6 +44,12 @@ h3 {
   margin-top: 1vw;
   width: 100%;
   border: 1px solid rgba(100, 100, 100, 0.5);
+}
+
+.heading {
+  margin-top: 1vw;
+  width: 100%;
+  line-height: 1vw;
 }
 
 

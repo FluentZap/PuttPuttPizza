@@ -1,4 +1,5 @@
 var prices;
+var order;
 
 function Order(storeNumber) {
   this.storeNumber = storeNumber;
@@ -78,6 +79,22 @@ function PriceDatabaseEntry(name, cost) {
 }
 
 
+function updateOrderUi(item) {
+  var orders = ""
+  for (var i = 0; i < item.orderItems.length; i++) {
+    orders += "<h3>" + item.orderItems[i].name + item.orderItems[i].cost + "</h3>"
+  }
+
+  $("order-list").html(orders);
+}
+
+
+function updatePizzaUi() {
+
+
+
+}
+
 function addBasicPrices() {
   prices.addEntry("size-small", 0.80);
   prices.addEntry("size-medium", 1.00);
@@ -109,17 +126,16 @@ function addBasicPrices() {
 }
 
 function addEventHandlers() {
-  $(".options").on("click", "", function (event) {
+  $(".options").on("click", ".option", function (event) {
     console.log(event.target.id);
-
   });
 }
 
 $(document).ready(function () {
+  order = new Order();
   prices = new PriceDatabase();
   addBasicPrices();
   addEventHandlers();
-
   //Size Prices are a multiplier for the pizzia price
 
 
