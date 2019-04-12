@@ -27,7 +27,7 @@ body {
   background-color: silver;
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 600px;
+  max-height: 80vh;
   padding: 0px;
   padding-left: 0.5vw;
   padding-right: 0.5vw;
@@ -42,8 +42,11 @@ h3 {
 
 .option {
   margin-top: 1vw;
-  width: 100%;
+  max-width: 100%;
   border: 1px solid rgba(100, 100, 100, 0.5);
+  max-height: 10vw;
+  width: auto;
+  height: auto;
 }
 
 .heading {
@@ -52,23 +55,29 @@ h3 {
   line-height: 1vw;
 }
 
+.footing {
+  margin-top: 1vw;
+  width: 100%;
+  line-height: .1vw;
+  font-size: 1vw;
+}
 
-/* width */
+.selected {
+  background-color: rgba(100, 100, 120, 0.5)
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
