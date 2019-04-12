@@ -13,47 +13,52 @@ Order.prototype.addItem = function () {
   this.orderItems.push(new OrderItem(name));
 };
 
+Order.prototype.getCurrent = function () {
+  return (order.orderItems[order.currentItem])
+};
+
 function OrderItem(name) {
   this.cost = 0;
   this.itemName = name;
-  this.size = ""
-  this.crustStyle = ""
-  this.sauce = ""
-  this.toppings = [];
+  this.options = ["size-medium", "crust-normal", "sauce-red"];
 }
 
 OrderItem.prototype.addToPizza = function (name) {
-  if (name.includes("crust")) {
-    this.crustStyle = name; return;
+  for (var i = 0; i < this.options.length; i++) {
+    if (this.options[i] === name) {
+      if (!this.options[i].includes("crust") && !this.options[i].includes("size")) {
+        delete this.options[i]
+      }
+    return;
+    }
   }
-  if (name.includes("sauce")) {
-    this.sauce = name; return;
-  }
-  if (name.includes("size")) {
-    this.size = name; return;
-  }
-  console.log(name);
-  for (var i = 0; i < this.toppings.length; i++) {
-    if (this.toppings[i] === name) return;
-  }
-  this.toppings.push(name);
+
+  if (name.includes("crust")) removeIfContained(this.options, "crust")
+  if (name.includes("sauce")) removeIfContained(this.options, "sauce")
+  if (name.includes("size")) removeIfContained(this.options, "size")
+
+  this.options.push(name);
 };
 
-
 OrderItem.prototype.getCost = function () {
-  if (!this.size || !this.crustStyle || !this.sauce) {
-    return false;
-  }
   var cost = 0;
   //add topping cost
-  this.toppings.forEach(function (topping) {
+  this.options.forEach(function (topping) {
     cost += prices.getCost(topping);
   });
   cost += prices.getCost(this.crustStyle);
   cost += prices.getCost(this.sauce);
   //multiply by size
   cost *= prices.getCost(this.size);
+  this.cost = cost;  
   return cost;
+}
+
+function removeIfContained(collection, entry) {
+  for (var i = 0; i < collection.length; i++) {
+    if (typeof collection[i] === "string" && collection[i].includes(entry))
+    delete collection[i]
+  }
 }
 
 
@@ -76,8 +81,9 @@ PriceDatabase.prototype.addEntry = function (name, cost) {
 };
 
 PriceDatabase.prototype.getCost = function (name) {
-  for (var i = 0; i < entries.length; i++) {
-    if (entries[i].name === name) return entries[i].cost;
+  console.log(name);
+  for (var i = 0; i < this.entries.length; i++) {
+    if (this.entries[i].name === name) return this.entries[i].cost;
   }
   return false;
 };
@@ -94,9 +100,19 @@ function updateOrderUi(item) {
     orders += "<h3>" + item.orderItems[i].name + item.orderItems[i].cost + "</h3>"
   }
 
-  $("order-list").html(orders);
+  $("#order-list").html(orders);
 }
 
+function updateToppingsUi(item) {
+  $(".option").removeClass("selected");
+
+  if (item.crustStyle === "crust-normal" ) $("#crust-normal").addClass("selected")
+
+  for (var i = 0; i < item.options.length; i++) {
+    $("#" + item.options[i]).addClass("selected");
+  }
+
+}
 
 function updatePizzaUi() {
 
@@ -136,7 +152,11 @@ function addBasicPrices() {
 
 function addEventHandlers(order) {
   $(".options").on("click", ".option", function (event) {
-    order.orderItems[order.currentItem].addToPizza(event.target.id);
+    var currentOrder = order.getCurrent()
+    currentOrder.addToPizza(event.target.id);
+    updateToppingsUi(currentOrder);
+    currentOrder.getCost();
+    updateOrderUi(order);
   });
 }
 
@@ -144,6 +164,8 @@ $(document).ready(function () {
   prices = new PriceDatabase();
   order = new Order();
   order.addItem();
+  updateToppingsUi(order.orderItems[order.currentItem]);
+  updateOrderUi(order)
   addBasicPrices();
   addEventHandlers(order);
   //Size Prices are a multiplier for the pizzia price
