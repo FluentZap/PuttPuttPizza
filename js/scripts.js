@@ -17,6 +17,18 @@ Order.prototype.getCurrent = function () {
   return (order.orderItems[order.currentItem])
 };
 
+Order.prototype.gotoFirst = function () {
+  for (var i = 0; i < this.orderItems.length; i++) {
+    if (this.orderItems[i]) {
+        this.currentItem = i;
+        return;
+    }
+  }
+  this.orderItems = [];
+  this.addItem();
+  this.currentItem = 0;
+}
+
 function OrderItem(name) {
   this.cost = 0;
   this.name = name;
@@ -101,7 +113,7 @@ function updateOrderUi(item) {
   for (var i = 0; i < item.orderItems.length; i++) {
     if (item.orderItems[i]) {
       orders += "<h3 class='order rounded' id='" + i + "'>"
-      + '<button class="remove-pizza" type="button" name="button">X</button>'
+      + '<button class="remove-pizza" id="remove-' + i + '" type="button" name="button">X</button>'
        + item.orderItems[i].name + " $" + item.orderItems[i].cost + "</h3>"
     }
   }
@@ -167,7 +179,16 @@ function addEventHandlers(order) {
   });
 
   $("#order-list").on("click", "h3", function (event) {
-    order.currentItem = event.target.id;
+    if(event.target.className === "remove-pizza") {
+      delete order.orderItems[event.target.id.replace("remove-", "")];
+      if (parseInt(event.target.id.replace("remove-", "")) === order.currentItem) {
+        order.gotoFirst();
+        order.getCurrent().getCost();
+      }
+    } else {
+      order.currentItem = parseInt(event.target.id);
+    }
+
     updateToppingsUi(order.getCurrent());
     updateOrderUi(order);
   });

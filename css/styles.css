@@ -29,9 +29,13 @@ body {
   width: 450px;
 }
 
-.btn-info {
-  margin-bottom: 1vw;
+.remove-pizza {
+  /* margin-bottom: .1vw; */
+  font-size: 1.5vw;
+  background-color: rgba(10, 10, 10, 0.5);
+  border-style: none;
 }
+
 /* .pizzaDisplay { */
 
 .overlap {
