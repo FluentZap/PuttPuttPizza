@@ -86,17 +86,6 @@ function removeIfContained(collection, entry) {
   }
 }
 
-
-function ClientInformation() {
-  this.name
-  this.phoneNumber
-  this.address
-  this.zipCode
-  this.city
-  this.state
-}
-
-
 function PriceDatabase() {
   this.entries = [];
 }
