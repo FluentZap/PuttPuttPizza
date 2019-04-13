@@ -132,9 +132,12 @@ function updateToppingsUi(item) {
 
 }
 
-function updatePizzaUi() {
-  
+function updatePizzaUi(item) {
+    $(".overlap").css("display", "none");
 
+  for (var i = 0; i < item.options.length; i++) {
+    $("#display-" + item.options[i]).css("display", "block");
+  }
 
 }
 
@@ -174,6 +177,7 @@ function addEventHandlers(order) {
     var currentOrder = order.getCurrent()
     currentOrder.addToPizza(event.target.id);
     updateToppingsUi(currentOrder);
+    updatePizzaUi(currentOrder);
     currentOrder.getCost();
     updateOrderUi(order);
   });
@@ -188,7 +192,7 @@ function addEventHandlers(order) {
     } else {
       order.currentItem = parseInt(event.target.id);
     }
-
+    updatePizzaUi(order.getCurrent());
     updateToppingsUi(order.getCurrent());
     updateOrderUi(order);
   });
@@ -197,6 +201,7 @@ function addEventHandlers(order) {
     order.addItem();
     order.currentItem = order.orderItems.length - 1;
     order.getCurrent().getCost();
+    updatePizzaUi(order.getCurrent());
     updateToppingsUi(order.getCurrent());
     updateOrderUi(order);
   });
@@ -210,6 +215,7 @@ $(document).ready(function () {
   order.addItem();
   order.getCurrent().getCost();
   updateToppingsUi(order.getCurrent());
+  updatePizzaUi(order.getCurrent());
   updateOrderUi(order)
   addEventHandlers(order);
   //Size Prices are a multiplier for the pizzia price

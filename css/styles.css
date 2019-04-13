@@ -30,7 +30,12 @@ body {
   padding: 1vmax;
 }
 
-.pizzaDisplay img {
+/* .pizzaDisplay img {
+  display: block;
+  width: 100%;
+} */
+
+#pizza {
   display: block;
   width: 100%;
 }
@@ -44,13 +49,14 @@ body {
   padding: 0.1vw;
 }
 
-/* .pizzaDisplay { */
 
 .overlap {
+  display: none;
   position: absolute;
   left: 0;
   top: 0;
   z-index: 10;
+  width: 100%;
 }
 
 .orders {
