@@ -218,7 +218,4 @@ $(document).ready(function () {
   updatePizzaUi(order.getCurrent());
   updateOrderUi(order)
   addEventHandlers(order);
-  //Size Prices are a multiplier for the pizzia price
-
-
 });
