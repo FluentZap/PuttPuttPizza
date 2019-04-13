@@ -2,16 +2,6 @@
 /* font-family: 'Indie Flower', cursive; */
 
 
-h1 {
-  text-align: center;
-  font-size: 5vw;
-  font-family: 'Indie Flower', cursive;
-}
-
-h2 {
-  font-size: 2vw;
-}
-
 html, body {
   font-family: 'Roboto Slab', serif;
   text-align: center;
@@ -23,7 +13,20 @@ html, body {
   height: 100%;
 }
 
-.container {
+h1 {
+  text-align: center;
+  font-size: 5vw;
+  font-family: 'Indie Flower', cursive;
+}
+
+h2 {
+  font-size: 2vw;
+}
+
+h3 {
+  line-height: 4vw;
+  margin: 0px;
+  font-size: 2vw;
 }
 
 .pizza {
@@ -45,11 +48,6 @@ html, body {
   padding: 1vmax;
 }
 
-/* .pizzaDisplay img {
-  display: block;
-  width: 100%;
-} */
-
 #pizza {
   display: block;
   width: 100%;
@@ -63,7 +61,6 @@ html, body {
   line-height: 1vw;
   padding: 0.1vw;
 }
-
 
 .overlap {
   display: none;
@@ -103,11 +100,6 @@ html, body {
   min-width: 18vmin;
 }
 
-h3 {
-  line-height: 4vw;
-  margin: 0px;
-  font-size: 2vw;
-}
 
 .option {
   margin-top: 1vw;
@@ -129,6 +121,13 @@ h3 {
   width: 100%;
   line-height: .1vw;
   font-size: 1vw;
+}
+
+
+#checkout {
+  background-color: rgba(186,225,255, 0.5);
+  width: 100%;
+  margin-top: .4vw;
 }
 
 .selected {

@@ -216,6 +216,11 @@ function addEventHandlers(order) {
     updateToppingsUi(order.getCurrent());
     updateOrderUi(order);
   });
+
+  $("#checkout").on("click", "", function (event) {
+    $("#order-screen").hide("slide", {direction: "up"});
+    $("#order-screen").hide("slide", {direction: "up"});
+  });
 }
 
 $(document).ready(function () {

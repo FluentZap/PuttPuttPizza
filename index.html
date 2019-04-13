@@ -5,13 +5,14 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/styles.css">
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Roboto+Slab" rel="stylesheet">
     <title>Put Put Pizza</title>
   </head>
   <body>
     <!-- <img src="/img/Windmill.jpg" alt=""> -->
-    <div class="container">
+    <div class="container" id="order-screen">
       <h1>Putt Putt Pizza</h1>
       <div class="d-flex justify-content-center">
         <div class="rounded orders">
@@ -21,6 +22,7 @@
           <h4 id="pizza-total"></h4>
           <button id="add-pizza" class="btn-info" type="button" name="button">Add Pizza</button>
           <div id="order-list"></div>
+          <button id="checkout" class="btn" type="button" name="button">Checkout</button>
         </div>
         <div class="rounded pizza">
           <h2>Pizza</h2>
