@@ -113,7 +113,7 @@ function updateOrderUi(item) {
   for (var i = 0; i < item.orderItems.length; i++) {
     if (item.orderItems[i]) {
       orders += "<h3 class='order rounded' id='" + i + "'>"
-      + '<button class="remove-pizza" id="remove-' + i + '" type="button" name="button">X</button>'
+      + '<button class="remove-pizza" id="remove-' + i + '" type="button" name="button">X</button> &nbsp'
        + item.orderItems[i].name + " $" + item.orderItems[i].cost + "</h3>"
     }
   }
@@ -133,7 +133,7 @@ function updateToppingsUi(item) {
 }
 
 function updatePizzaUi() {
-
+  
 
 
 }
