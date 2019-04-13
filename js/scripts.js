@@ -29,6 +29,16 @@ Order.prototype.gotoFirst = function () {
   this.currentItem = 0;
 }
 
+Order.prototype.getTotal = function () {
+  var total = 0;
+  for (var i = 0; i < this.orderItems.length; i++) {
+    if (this.orderItems[i]) {
+      total += parseFloat(this.orderItems[i].cost);
+    }
+  }
+  return total.toFixed(2);
+}
+
 function OrderItem(name) {
   this.cost = 0;
   this.name = name;
@@ -117,6 +127,7 @@ function updateOrderUi(item) {
        + item.orderItems[i].name + " $" + item.orderItems[i].cost + "</h3>"
     }
   }
+  $("#pizza-total").text("$" + item.getTotal());
   $("#order-list").html(orders);
   $("#" + item.currentItem).addClass("selected")
 }
